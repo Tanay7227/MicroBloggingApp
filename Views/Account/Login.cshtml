@@ -1,0 +1,38 @@
+﻿@model Blog_MSP.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login to MicroBloggingApp</h2>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName"
+               class="form-control"
+               autocomplete="username" />
+        <span asp-validation-for="UserName"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password"
+               class="form-control"
+               autocomplete="current-password" />
+        <span asp-validation-for="Password"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    <p class="mt-3">
+        Don't have an account? Then Click here
+        <a asp-controller="Account" asp-action="Register">Register here</a>
+    </p>
+</form>

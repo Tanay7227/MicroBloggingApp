@@ -1,0 +1,54 @@
+﻿@model Blog_MSP.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-4">
+    <h2>My Profile</h2>
+    <hr />
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">First Name</dt>
+                <dd class="col-sm-9">@Model.FirstName</dd>
+
+                <dt class="col-sm-3">Last Name</dt>
+                <dd class="col-sm-9">@Model.LastName</dd>
+
+                <dt class="col-sm-3">Username</dt>
+                <dd class="col-sm-9">@Model.UserName</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">City</dt>
+                <dd class="col-sm-9">@Model.City</dd>
+
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Model.Address</dd>
+
+                <dt class="col-sm-3">Pincode</dt>
+                <dd class="col-sm-9">@Model.Pincode</dd>
+
+                <dt class="col-sm-3">Gender</dt>
+                <dd class="col-sm-9">@Model.Gender</dd>
+
+                <dt class="col-sm-3">Hobbies</dt>
+                <dd class="col-sm-9">@Model.Hobbies</dd>
+            </dl>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-secondary">
+                Back to Home
+            </a>
+            <a asp-controller="Account"
+               asp-action="EditProfile"
+               class="btn btn-primary">
+                Edit Profile
+            </a>
+        </div>
+    </div>
+</div>

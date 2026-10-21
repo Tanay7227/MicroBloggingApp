@@ -1,0 +1,109 @@
+﻿@model Blog_MSP.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Create Your Account</h2>
+
+<form asp-controller="Account" asp-action="Register" method="post">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City"></label>
+        <select asp-for="City" class="form-select">
+            <option value="">-- Select City --</option>
+            <option>Ahmedabad</option>
+            <option>Surat</option>
+            <option>Vadodara</option>
+            <option>Rajkot</option>
+            <option>Other</option>
+        </select>
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address"></label>
+        <textarea asp-for="Address" class="form-control"></textarea>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Pincode"></label>
+        <input asp-for="Pincode" class="form-control" />
+        <span asp-validation-for="Pincode" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" autocomplete="username" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" autocomplete="email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" autocomplete="new-password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Gender</label><br />
+
+        <input asp-for="Gender" type="radio" value="Male" id="genderMale" />
+        <label for="genderMale">Male</label>
+
+        <input asp-for="Gender" type="radio" value="Female" id="genderFemale" />
+        <label for="genderFemale">Female</label>
+
+        <input asp-for="Gender" type="radio" value="Other" id="genderOther" />
+        <label for="genderOther">Other</label>
+
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Hobbies</label><br />
+
+        <input type="checkbox" name="Hobbies" value="Reading" id="hobbyReading" />
+        <label for="hobbyReading">Reading</label>
+
+        <input type="checkbox" name="Hobbies" value="Music" id="hobbyMusic" />
+        <label for="hobbyMusic">Music</label>
+
+        <input type="checkbox" name="Hobbies" value="Sports" id="hobbySports" />
+        <label for="hobbySports">Sports</label>
+
+        <input type="checkbox" name="Hobbies" value="Travel" id="hobbyTravel" />
+        <label for="hobbyTravel">Travel</label>
+
+        <span asp-validation-for="Hobbies" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

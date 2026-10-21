@@ -1,0 +1,115 @@
+﻿@model Blog_MSP.Models.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h2>Edit My Profile</h2>
+<hr />
+
+<form asp-controller="Account"
+      asp-action="EditProfile"
+      method="post">
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Username</label>
+        <input value="@User.Identity?.Name" class="form-control" readonly />
+        <small class="text-muted">Username cannot be changed.</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City"></label>
+        <select asp-for="City" class="form-select">
+            <option value="">-- Select City --</option>
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Surat">Surat</option>
+            <option value="Vadodara">Vadodara</option>
+            <option value="Rajkot">Rajkot</option>
+            <option value="Other">Other</option>
+        </select>
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address"></label>
+        <textarea asp-for="Address" class="form-control"></textarea>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Pincode"></label>
+        <input asp-for="Pincode" class="form-control" />
+        <span asp-validation-for="Pincode" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Gender</label><br />
+
+        <input asp-for="Gender" type="radio" value="Male" id="genderMale" />
+        <label for="genderMale">Male</label>
+
+        <input asp-for="Gender" type="radio" value="Female" id="genderFemale" />
+        <label for="genderFemale">Female</label>
+
+        <input asp-for="Gender" type="radio" value="Other" id="genderOther" />
+        <label for="genderOther">Other</label>
+
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Hobbies</label><br />
+
+        <input type="checkbox" name="Hobbies" value="Reading"
+               id="hobbyReading"
+               checked="@Model.Hobbies.Contains("Reading")" />
+        <label for="hobbyReading">Reading</label>
+
+        <input type="checkbox" name="Hobbies" value="Music"
+               id="hobbyMusic"
+               checked="@Model.Hobbies.Contains("Music")" />
+        <label for="hobbyMusic">Music</label>
+
+        <input type="checkbox" name="Hobbies" value="Sports"
+               id="hobbySports"
+               checked="@Model.Hobbies.Contains("Sports")" />
+        <label for="hobbySports">Sports</label>
+
+        <input type="checkbox" name="Hobbies" value="Travel"
+               id="hobbyTravel"
+               checked="@Model.Hobbies.Contains("Travel")" />
+        <label for="hobbyTravel">Travel</label>
+
+        <span asp-validation-for="Hobbies" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+
+    <a asp-controller="Account"
+       asp-action="Profile"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>
