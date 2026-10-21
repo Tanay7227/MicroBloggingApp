@@ -1,0 +1,14 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Blog_MSP.Controllers
+{
+    public class HomeController : Controller
+    {
+        
+        public IActionResult Index()
+        {
+            return View();
+        }
+    }
+}
