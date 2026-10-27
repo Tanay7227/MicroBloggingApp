@@ -1,4 +1,5 @@
-﻿using Blog_MSP.Models;
+using Blog_MSP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace Blog_MSP.Controllers
 {
     public class AccountController : Controller
     {
+        //Phase 1
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -21,17 +23,22 @@ namespace Blog_MSP.Controllers
             return View();
         }
 
+        //Phase 2
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            //Checking Model is Valid or not
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
+            //Finding the username from db using FindByNameAsync Method.
             var existingUser = await _userManager.FindByNameAsync(model.UserName);
 
+            //Checking Username is taken or not.
+            // If username is present and not equal to null
             if (existingUser != null)
             {
                 ModelState.AddModelError(
@@ -41,8 +48,11 @@ namespace Blog_MSP.Controllers
                 return View(model);
             }
 
+            //Finding the Email from db using FindByEmailAsync Method.
             var existingEmail = await _userManager.FindByEmailAsync(model.Email);
 
+            //Checking Email is taken or not.
+            // If Email is present and not equal to null
             if (existingEmail != null)
             {
                 ModelState.AddModelError(
@@ -52,17 +62,39 @@ namespace Blog_MSP.Controllers
                 return View(model);
             }
 
+            //Converting cityname into the array list.
             var allowedCities = new[]
             {
                 "Ahmedabad", "Surat", "Vadodara", "Rajkot", "Other"
             };
 
+
+            //Verify the form values 
             if (!allowedCities.Contains(model.City))
             {
                 ModelState.AddModelError(
                     nameof(model.City),
                     "Please select a valid city.");
 
+                return View(model);
+            }
+
+            //Verify the form values 
+            var genders = new[] { "Male", "Female", "Other" };
+
+            if (!genders.Contains(model.Gender))
+            {
+                ModelState.AddModelError(nameof(model.Gender), "Select Valid Gender");
+                return View(model);
+            }
+
+            //Verify the form values 
+            var validHobbies = new[] { "Reading", "Music", "Sports", "Travel" };
+
+            if (model.Hobbies == null || model.Hobbies.Count == 0 ||
+                model.Hobbies.Any(h => !validHobbies.Contains(h)))
+            {
+                ModelState.AddModelError(nameof(model.Hobbies), "Select Valid Hobbies");
                 return View(model);
             }
 
@@ -84,7 +116,7 @@ namespace Blog_MSP.Controllers
             if (result.Succeeded)
             {
                 return RedirectToAction("Login", "Account");
-            }
+            }   
 
             foreach (var error in result.Errors)
             {
@@ -141,13 +173,14 @@ namespace Blog_MSP.Controllers
 
         //Profile
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Profile()
         {
             // Check whether the user is logged in
-            if (!User.Identity!.IsAuthenticated)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (!User.Identity!.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             // Get the currently logged-in user from Identity
             var user = await _userManager.GetUserAsync(User);
@@ -176,13 +209,14 @@ namespace Blog_MSP.Controllers
 
         //Edit
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> EditProfile()
         {
             // Check whether the user is logged in
-            if (!User.Identity!.IsAuthenticated)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (!User.Identity!.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             // Get the currently logged-in user
             var user = await _userManager.GetUserAsync(User);
@@ -211,13 +245,14 @@ namespace Blog_MSP.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(EditProfileViewModel model)
         {
-            if (!User.Identity!.IsAuthenticated)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (!User.Identity!.IsAuthenticated)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             if (!ModelState.IsValid)
             {
@@ -232,9 +267,9 @@ namespace Blog_MSP.Controllers
             }
 
             // Check whether another user already uses this email
-            var existingUser = await _userManager.FindByEmailAsync(model.Email);
+            var existingemail = await _userManager.FindByEmailAsync(model.Email);
 
-            if (existingUser != null && existingUser.Id != user.Id)
+            if (existingemail != null && existingemail.Id != user.Id)
             {
                 ModelState.AddModelError(
                     nameof(model.Email),
